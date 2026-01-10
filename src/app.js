@@ -1,23 +1,40 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { errorHandler, notFound } from "./middleware/error.middleware.js";
+import authRoutes from "./routes/auth.routes.js";
+import morgan from "morgan";
 
 const app = express();
 
-
+app.use(morgan("dev"));
 app.use(express.json()); //parse JSON body
 app.use(cookieParser()); //needed for JWT
 
+
+
 app.use(cors(
     {
-
         origin: process.env.CLIENT_URL,
         credentials: true //mandatory for cookies
     }
 ))
 
+app.use("/auth", authRoutes);
+
 // Health check
 
-app.use("/health", (req, res) => res.status(200).json({ status: "ok" }));
+// Health check route
+app.get("/health", (req, res) => {
+    res.status(200).json({ status: "OK" });
+});
+app.get("/", (req, res) => {
+    res.status(200).json({ status: "OK" });
+});
 
+app.use("/auth", authRoutes);
+
+// If the request didn't match any route above, it falls into these:
+app.use(notFound);      // Catches anything that isn't a route
+app.use(errorHandler);  // Processes the error and sends JSON
 export default app
