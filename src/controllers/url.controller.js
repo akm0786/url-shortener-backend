@@ -94,3 +94,35 @@ export const redirectShortUrl = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getUserUrls = async (req, res, next) => {
+  try {
+    const urls = await Url.find({ userId: req.user._id })
+      .sort({ createdAt: -1 })
+      .select("originalUrl shortCode clicks createdAt");
+
+    res.status(200).json({
+      success: true,
+      data: urls
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export const getUrlCount = async (req, res, next) => {
+  try {
+    const count = await Url.countDocuments({
+      userId: req.user._id
+    });
+
+    res.status(200).json({
+      success: true,
+      data: { totalUrls: count }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
