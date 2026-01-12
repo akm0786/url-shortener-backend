@@ -74,3 +74,23 @@ export const createShortUrl = async (req, res, next) => {
         next(error);
     }
 };
+
+export const redirectShortUrl = async (req, res, next) => {
+  try {
+    const { shortCode } = req.params;
+
+    const url = await Url.findOne({ shortCode });
+
+    if (!url) {
+      res.status(404);
+      throw new Error("Short URL not found");
+    }
+
+    url.clicks += 1;
+    await url.save();
+
+    return res.redirect(url.originalUrl);
+  } catch (error) {
+    next(error);
+  }
+};
