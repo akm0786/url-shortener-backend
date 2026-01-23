@@ -13,14 +13,12 @@ app.use(morgan("dev"));
 app.use(express.json()); //parse JSON body
 app.use(cookieParser()); //needed for JWT
 
+app.use(cors({
+    origin: "http://localhost:5173",
+    // origin: process.env.CLIENT_URL,
+    credentials: true, //mandatory for cookies 
+}))
 
-
-app.use(cors(
-    {
-        origin: process.env.CLIENT_URL,
-        credentials: true //mandatory for cookies
-    }
-))
 
 // Health check route
 app.get("/health", (req, res) => {
@@ -32,7 +30,7 @@ app.get("/health", (req, res) => {
 
 app.use("/auth", authRoutes);
 app.use("/api/urls", urlRoutes)
-app.use("/",redirectRoutes)
+app.use("/", redirectRoutes)
 
 // If the request didn't match any route above, it falls into these:
 app.use(notFound);      // Catches anything that isn't a route

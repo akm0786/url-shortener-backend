@@ -65,6 +65,7 @@ export const createShortUrl = async (req, res, next) => {
     res.status(201).json({
       success: true,
       data: {
+        _id: newUrl._id,
         shortCode: newUrl.shortCode,
         shortUrl: `${process.env.BASE_URL}/${newUrl.shortCode}`,
         originalUrl: newUrl.originalUrl
