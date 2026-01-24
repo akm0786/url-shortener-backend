@@ -72,7 +72,7 @@ export const login = async (req, res) => {
 //logout
 export const logout = async (req, res) => {
 
-    res.cookie("jwt", "", {
+    res.cookie("token", "", {
         httpOnly: true,
         expires: new Date(0), // it sets the expiration date to January 1, 1970. Since that date is long in the past, the browser sees the cookie and immediately deletes it.
         secure: true

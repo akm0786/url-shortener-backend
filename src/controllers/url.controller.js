@@ -101,7 +101,7 @@ export const getUserUrls = async (req, res, next) => {
     const urls = await Url.find({ userId: req.user._id })
       .sort({ createdAt: -1 })
       .select("originalUrl shortCode clicks createdAt");
-
+    
     res.status(200).json({
       success: true,
       data: urls
