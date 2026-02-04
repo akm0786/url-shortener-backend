@@ -1,5 +1,5 @@
 // controllers/url.controller.js
-import Url from "../models/url.model.js";
+import Url from "../models/Url.model.js";
 import { nanoid } from 'nanoid';
 import { isValidUrl, normalizeUrl } from "../utils/validateUrl.js";
 
