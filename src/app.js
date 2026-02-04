@@ -15,8 +15,8 @@ app.use(cookieParser()); //needed for JWT
 app.set("trust proxy", 1)
 
 app.use(cors({
-    origin: "http://localhost:5173",
-    // origin: process.env.CLIENT_URL,
+    // origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     credentials: true, //mandatory for cookies 
 }))
 
