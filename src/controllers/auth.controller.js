@@ -83,6 +83,7 @@ export const logout = async (req, res) => {
 
 //get current user
 export const getMe = (req, res) => {
+     res.setHeader("Cache-Control", "no-store");
     res.status(200).json({
         success: true,
         user: req.user
