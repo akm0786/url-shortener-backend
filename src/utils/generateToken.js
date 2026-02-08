@@ -4,15 +4,24 @@ const generateToken = (res, userId) => {
     const token = jwt.sign(
         { id: userId },
         process.env.JWT_SECRET,
-        { expiresIn: "60m" }
+        { expiresIn: "30m" }
     )
 
-    res.cookie("token", token ,{
+    // res.cookie("token", token ,{
+    //     httpOnly: true,
+    //     secure: process.env.NODE_ENV === "production",  // Only secure in production
+    //     sameSite: "None",
+    //     maxAge: 30 * 60 * 1000,
+    // })
+
+    const expires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes from now
+    res.cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",  // Only secure in production
+        secure: process.env.NODE_ENV === "production",
         sameSite: "None",
-        maxAge: 15 * 60 * 1000
-    })
+        expires: expires, // Expiration date
+    });
+
 
 }
 
