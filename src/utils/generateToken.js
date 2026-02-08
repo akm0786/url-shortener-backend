@@ -14,10 +14,10 @@ const generateToken = (res, userId) => {
     //     maxAge: 30 * 60 * 1000,
     // })
 
-    const expires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes from now
+    const expires = new Date(Date.now() + 30 * 60 * 1000); // 15 minutes from now
     res.cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "None",
         expires: expires, // Expiration date
     });
